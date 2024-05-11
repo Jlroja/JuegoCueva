@@ -20,7 +20,7 @@ import { EcctrlJoystick } from "ecctrl";
 import MouseMen from "./characters/mouseMen/MouseMen";
 
 
-export default function Level1() {
+export default function Cueva_Encantada() {
     const map = useMovements();
     const auth = useAuth()
     const [players] = useAtom(playersAtom);

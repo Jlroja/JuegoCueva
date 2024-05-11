@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Level1 from "../pages/level1/Level1";
+import Cueva_Encantada from "../pages/cueva_encantada/Cueva_Encantada";
 import Login from "../pages/login/Login";
 
 export default function RoutesSquidGames() {
@@ -7,7 +7,7 @@ export default function RoutesSquidGames() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Login />} />
-                <Route path="/level1" element={<Level1 />} />
+                <Route path="/cueva_encantada" element={<Cueva_Encantada />} />
             </Routes>
         </BrowserRouter>
     )

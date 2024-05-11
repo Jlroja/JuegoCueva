@@ -8,7 +8,7 @@ export default function Login() {
 
     const onHandleButtonLogin = async () => {
         await auth.loginWithGoogle()
-        .then((res)=>navigate('/level1'))
+        .then((res)=>navigate('/cueva_encantada'))
         .catch((error)=>console.error(error))
     }
 
