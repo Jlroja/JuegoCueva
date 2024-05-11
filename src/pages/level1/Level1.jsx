@@ -17,7 +17,7 @@ import Logout from "../../components/logout/Logout";
 import { createUser, readUser } from "../../db/users-collection";
 import { useAtom } from "jotai";
 import { EcctrlJoystick } from "ecctrl";
-import RedMen from "./characters/redMen/RedMen";
+import MouseMen from "./characters/mouseMen/MouseMen";
 
 
 export default function Level1() {
@@ -61,15 +61,14 @@ export default function Level1() {
                 <Logout />
                 <EcctrlJoystick />
                 <Canvas shadows={true}>
-                    {/* <Perf position="top-left" /> */}
                     <Lights />
                     <Environments />
                     <Physics debug={false}>
                         <World />
                         <Player1/>
-                        <RedMen/>
+                        <MouseMen/>
                     </Physics>
-                    <WelcomeText position={[0, 2, -95]} />
+                    <WelcomeText position={[3, 2, -95]} />
                     <Controls />
                 </Canvas>
             </KeyboardControls>

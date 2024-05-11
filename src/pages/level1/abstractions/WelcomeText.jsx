@@ -1,14 +1,14 @@
 import { Center, Float, Text3D } from "@react-three/drei";
 
 const WelcomeText = (props) => {
-    const text = "Cueva Encantada";
+    const text = "Cueva encantada";
 
     return (
         <Float
             speed={1.5}
             rotationIntensity={0.01}
             floatIntensity={0.5}
-            floatingRange={[1, 2]}
+            floatingRange={[10, 6]}
 
         >
         <Center
@@ -17,11 +17,11 @@ const WelcomeText = (props) => {
             <Text3D
                 font={"/assets/fonts/FontGame.json"}
                 bevelEnabled
-                bevelSize={0.002}
+                bevelSize={0.02}
                 bevelThickness={0.01}
-                height={0.5}
+                height={1}
                 letterSpacing={0.02}
-                size={0.9}
+                size={0.5}
             >
                 <meshNormalMaterial />
                 {text}

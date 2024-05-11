@@ -7,9 +7,9 @@ export default function Environments() {
             preset={null}
             background={false}
             ground={{
-                height: 20,
-                scale: 100,
-                radius: 500
+                height: 100,
+                scale: 500,
+                radius: 1000
             }}
         />
     )

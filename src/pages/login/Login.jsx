@@ -18,7 +18,7 @@ export default function Login() {
                 <img src="/assets/images/JEK.png" alt="Logo equipo JEKH" />
             </div>
             <div className="title-cueva-encantada">
-                Bienvenido a<br />Cueva encantada
+                Bienvenido a<br />JEKH
             </div>
             <div onClick={onHandleButtonLogin} className="button-start">
                 <button>LOGIN</button>
