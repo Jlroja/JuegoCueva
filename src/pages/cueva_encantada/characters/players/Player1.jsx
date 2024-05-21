@@ -7,7 +7,7 @@ export default function Player(props) {
     const playerRef = useRef();
     const rigidBodyPlayerRef = useRef();
     const { avatar, setAvatar } = useAvatar();
-    const { nodes, materials, animations } = useGLTF("/assets/models/players/Player1.glb");
+    const { nodes, materials, animations } = useGLTF("/assets/models/players/Avatarplop.glb");
     const { actions } = useAnimations(animations, playerRef)
 
     useEffect(() => {
@@ -29,10 +29,11 @@ export default function Player(props) {
     return (
         <Ecctrl
             ref={rigidBodyPlayerRef}
+            position-y={10}
             camInitDis={-2}
             camMaxDis={-2}
             maxVelLimit={5}
-            jumpVel={8}
+            jumpVel={5}
         >
             <group ref={playerRef} name="Scene" position-y={-0.9}>
                 <group name="Armature">
@@ -111,4 +112,4 @@ export default function Player(props) {
     )
 }
 
-useGLTF.preload("/assets/models/players/Player1.glb");
+useGLTF.preload("/assets/models/players/Avatarplop.glb");
