@@ -3,17 +3,19 @@ import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { RigidBody } from "@react-three/rapier";
 
-export default function Coins({ props, catchCoin, position }) {
+export default function Coins2({ props, catchCoin, position }) {
   const { nodes, materials } = useGLTF("/assets/models/world/coin.glb");
   const [collected, setCollected] = useState(false);
+  const [pos, setPos] = useState(position);
   const refRigidBody = useRef();
 
   const onCollisionEnter = ({ other }) => {
     if (!collected && other.colliderObject?.name === "character-capsule-collider") {
       console.log("Chocó");
-      setCollected(true);
-      catchCoin();
-      refRigidBody.current.type = "kinematic"; // Cambia a tipo kinemático al ser recogida
+      setCollected(true); // Marca la moneda como recolectada
+      setPos([0, 1000, 0]); // Cambia la posición al ser recogida
+      catchCoin(); // Lógica para manejar la recolección de la moneda
+      refRigidBody.current.type = "kinematic"; // Cambia el tipo a kinemático para detener la física
     }
   };
 
@@ -31,9 +33,9 @@ export default function Coins({ props, catchCoin, position }) {
       if (typeof refRigidBody.current.setTranslation === 'function') {
         refRigidBody.current.setTranslation(
           {
-            x: position[0],
-            y: position[1] + y,
-            z: position[2],
+            x: pos[0],
+            y: pos[1] + y,
+            z: pos[2],
           },
           true
         );
@@ -50,7 +52,7 @@ export default function Coins({ props, catchCoin, position }) {
       colliders="cuboid"
       onCollisionEnter={onCollisionEnter}
       name="Coin"
-      position={position}
+      position={pos}
     >
       {!collected && (
         <group {...props} dispose={null} rotation={[0, 0, 0]}>

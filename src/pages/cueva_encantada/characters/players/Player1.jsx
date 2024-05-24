@@ -3,41 +3,63 @@ import { useAvatar } from "../../../../context/AvatarContext";
 import { useAnimations, useGLTF } from "@react-three/drei";
 import Ecctrl from "ecctrl";
 
-export default function Player(props) {
-    const playerRef = useRef();
-    const rigidBodyPlayerRef = useRef();
-    const { avatar, setAvatar } = useAvatar();
-    const { nodes, materials, animations } = useGLTF("/assets/models/players/Avatarplop.glb");
-    const { actions } = useAnimations(animations, playerRef)
+export default function Player({ vida }) {
+  const playerRef = useRef();
+  const rigidBodyPlayerRef = useRef();
+  const { avatar, setAvatar } = useAvatar();
+  const { nodes, materials, animations } = useGLTF("/assets/models/players/Avatarplop.glb");
+  const { actions } = useAnimations(animations, playerRef);
 
-    useEffect(() => {
-        actions[avatar.animation]?.reset().fadeIn(0.5).play();
-        return () => {
-            if (actions[avatar.animation])
-                actions[avatar.animation].fadeOut(0.5);
-        }
-    }, [actions, avatar.animation]);
+  // Efecto para manejar la lógica cuando la vida del jugador es <= 0
+  useEffect(() => {
+    if (vida <= 0) {
+      // Verifica si rigidBodyPlayerRef.current está definido antes de llamar a métodos
+      if (rigidBodyPlayerRef.current) {
+        rigidBodyPlayerRef.current.setTranslation(
+          {
+            x: 20,
+            y: 5,
+            z: -30,
+          },
+          true
+        );
+        // Aquí podrías necesitar alguna lógica adicional para reiniciar el estado del jugador
+      }
+    }
+  }, [vida]);
 
-    useEffect(() => {
-        setAvatar({
-            ...avatar,
-            playerRef: playerRef?.current,
-            rigidBodyPlayerRef: rigidBodyPlayerRef?.current
-        })
-    }, [playerRef?.current, rigidBodyPlayerRef?.current])
+  // Efecto para manejar las animaciones del jugador
+  useEffect(() => {
+    // Verifica si actions[avatar.animation] está definido antes de usarlo
+    if (actions[avatar.animation]) {
+      actions[avatar.animation].reset().fadeIn(0.5).play();
+      return () => {
+        actions[avatar.animation].fadeOut(0.5);
+      };
+    }
+  }, [actions, avatar.animation]);
 
-    return (
-        <Ecctrl
-            ref={rigidBodyPlayerRef}
-            position-y={10}
-            camInitDis={-2}
-            camMaxDis={-2}
-            maxVelLimit={5}
-            jumpVel={5}
-        >
-            <group ref={playerRef} name="Scene" position-y={-0.9}>
-                <group name="Armature">
-                <skinnedMesh
+  // Asigna las referencias playerRef.current y rigidBodyPlayerRef.current al avatar
+  useEffect(() => {
+    setAvatar({
+      ...avatar,
+      playerRef: playerRef?.current,
+      rigidBodyPlayerRef: rigidBodyPlayerRef?.current,
+    });
+  }, [playerRef?.current, rigidBodyPlayerRef?.current]);
+
+  return (
+    <Ecctrl
+      ref={rigidBodyPlayerRef}
+      camInitDis={-2}
+      camMaxDis={-2}
+      maxVelLimit={5}
+      jumpVel={5}
+      position={[0, 10, 0]}
+    >
+      <group ref={playerRef} name="Scene" position-y={-0.9}>
+        <group name="Armature">
+          <skinnedMesh
             name="EyeLeft"
             geometry={nodes.EyeLeft.geometry}
             material={materials.Wolf3D_Eye}
@@ -106,10 +128,10 @@ export default function Player(props) {
             morphTargetInfluences={nodes.Wolf3D_Teeth.morphTargetInfluences}
           />
           <primitive object={nodes.Hips} />
-                </group>
-            </group>
-        </Ecctrl>
-    )
+        </group>
+      </group>
+    </Ecctrl>
+  );
 }
 
 useGLTF.preload("/assets/models/players/Avatarplop.glb");

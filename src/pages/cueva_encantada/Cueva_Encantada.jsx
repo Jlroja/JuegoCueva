@@ -18,32 +18,44 @@ import { createUser, readUser } from "../../db/users-collection";
 import { useAtom } from "jotai";
 import { EcctrlJoystick } from "ecctrl";
 import MouseMen from "./characters/mouseMen/MouseMen";
-import { Coins } from "./Figures/Coins";
+import CharacterHudcueva_encantada from "./hud/CharacterHud";
+import Coins from "./Figures/Coins";
+import Coins2 from "./Figures/Coins";
+import Coins3 from "./Figures/Coins";
 
 export default function Cueva_Encantada() {
-  const [numeroDeMonedas, setNumeroDeMonedas] = useState(0);
+  const [coins, setCoins] = useState(0);
   const map = useMovements();
   const auth = useAuth();
   const [players] = useAtom(playersAtom);
+  const [vida, setVida] = useState(3);
 
-  const cogerMoneda = () => {
-    if (numeroDeMonedas < 5) {
-      setNumeroDeMonedas((prevCoin) => prevCoin + 1);
-    }
+  const resetPoint = () => {
+    setVida(3);
   };
-  /**
-   * Save the user data in the DB.
-   * @param {*} valuesUser
-   */
-  const saveDataUser = async (valuesUser) => {
-    const { success } = await readUser(valuesUser.email);
-    if (!success) await createUser(valuesUser);
+
+  const loseLife = () => {
+    setVida((prevVida) => prevVida - 1);
   };
-  /**
-   * When userLogged is changed call saveDataUser to save the user in the DB.
-   * @see saveDataUser
-   */
+
+  const handleCoins = () => {
+    setCoins((coins) => coins + 1);
+  };
+
   useEffect(() => {
+    /**
+     * Save the user data in the DB.
+     * @param {*} valuesUser
+     */
+    const saveDataUser = async (valuesUser) => {
+      const { success } = await readUser(valuesUser.email);
+      if (!success) await createUser(valuesUser);
+    };
+
+    /**
+     * When userLogged is changed call saveDataUser to save the user in the DB.
+     * @see saveDataUser
+     */
     if (auth.userLogged) {
       const { displayName, email } = auth.userLogged;
 
@@ -53,6 +65,7 @@ export default function Cueva_Encantada() {
       });
     }
   }, [auth.userLogged]);
+
   /**
    * Emit to the server that the player is connected.
    */
@@ -66,23 +79,26 @@ export default function Cueva_Encantada() {
         <Players />
         <Logout />
         <EcctrlJoystick />
-        <Canvas shadows={true}>
+        <Canvas
+          camera={{
+            position: [0, 1, 0],
+          }}
+        >
           <Lights />
           <Environments />
           <Physics debug={false}>
             <World />
-            <Player1 />
-            <MouseMen />
+            <Player1 vida={vida} resetPoint={resetPoint} />
+            <MouseMen loseLife={loseLife} />
 
-            <Coins position={[0, 2, -32]} catchCoin={cogerMoneda} />
-            {/* <Coins position={[0, 2, -38]} />
-            <Coins position={[0, 2, -42]} />
-            <Coins position={[0, 2, -47]} />
-            <Coins position={[0, 2, -55]} />  */}
+            <Coins position={[0, 2, -32]} catchCoin={handleCoins} />
+            <Coins2 position={[0, 2, -40]} catchCoin={handleCoins} />
+            <Coins3 position={[0, 2, -50]} catchCoin={handleCoins} />
           </Physics>
           <WelcomeText position={[3, 2, -95]} />
           <Controls />
         </Canvas>
+        <CharacterHudcueva_encantada coins={coins} />
       </KeyboardControls>
     </Suspense>
   );
