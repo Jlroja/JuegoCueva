@@ -91,11 +91,11 @@ export default function Cueva_Encantada() {
             <Player1 vida={vida} resetPoint={resetPoint} />
             <MouseMen loseLife={loseLife} />
 
-            <Coins position={[0, 2, -32]} catchCoin={handleCoins} />
-            <Coins2 position={[0, 2, -40]} catchCoin={handleCoins} />
-            <Coins3 position={[0, 2, -50]} catchCoin={handleCoins} />
+            <Coins position={[-1, 3, -41]} catchCoin={handleCoins} />
+            <Coins2 position={[1, 4, -42]} catchCoin={handleCoins} />
+            <Coins3 position={[1, 6, -45]} catchCoin={handleCoins} />
           </Physics>
-          <WelcomeText position={[3, 2, -95]} />
+          <WelcomeText position={[0, 0, -95]} />
           <Controls />
         </Canvas>
         <CharacterHudcueva_encantada coins={coins} />

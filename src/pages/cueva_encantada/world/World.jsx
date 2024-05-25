@@ -2,7 +2,7 @@ import { useGLTF } from "@react-three/drei"
 import { CuboidCollider, CylinderCollider, RigidBody } from "@react-three/rapier"
 
 export default function World(props) {
-    const { nodes, materials } = useGLTF("/assets/models/world/CuevaEncantada.glb")
+    const { nodes, materials } = useGLTF("/assets/models/world/CuevaEncantadaa.glb")
 
     return (
         <group {...props} dispose={null}>
@@ -12,6 +12,8 @@ export default function World(props) {
                     <mesh onClick={(e) => e.stopPropagation()} receiveShadow={true} geometry={nodes.Floor.geometry} material={materials.floorMaterial} />
                     <mesh onClick={(e) => e.stopPropagation()} receiveShadow={true} geometry={nodes.Bow.geometry} material={materials.bow} />
                     <mesh onClick={(e) => e.stopPropagation()} receiveShadow={true} geometry={nodes.Caja.geometry} material={materials.Caja} />
+                    <mesh onClick={(e) => e.stopPropagation()} receiveShadow={true} geometry={nodes.Punta.geometry} material={materials.Punta} />
+                    <mesh onClick={(e) => e.stopPropagation()} receiveShadow={true} geometry={nodes.Obst.geometry} material={materials.Obst} />
                 </RigidBody>
                 
             </group>
@@ -20,5 +22,5 @@ export default function World(props) {
     );
 }
 
-useGLTF.preload("/assets/models/world/CuevaEncantada.glb");
+useGLTF.preload("/assets/models/world/CuevaEncantadaa.glb");
 

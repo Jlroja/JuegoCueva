@@ -53,7 +53,7 @@ export default function Player({ vida }) {
       ref={rigidBodyPlayerRef}
       camInitDis={-2}
       camMaxDis={-2}
-      maxVelLimit={5}
+      maxVelLimit={6}
       jumpVel={5}
       position={[0, 10, 0]}
     >
